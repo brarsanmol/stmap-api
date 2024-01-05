@@ -7,6 +7,7 @@ import StopTimeCacherJob from './jobs/stop-time-cacher.job';
 import { fromRedisToStopTime, StopTime } from './entities/stop-time.entity';
 import { Bus, fromRedisToBus } from './entities/bus.entity';
 import { VehiclePositionUpdaterJob } from './jobs/vehicle-position-updater.job';
+import * as process from 'process';
 
 const useFastify = async () => {
   const app: FastifyInstance = fastify();
@@ -73,7 +74,7 @@ const useFastify = async () => {
       .send(busses);
   });
 
-  app.listen({ port: 3001 }, () => {
+  app.listen({ port: parseInt(process.env.PORT!) || 3000}, () => {
     console.log(
       `server listening on ${(app.server.address() as AddressInfo).port}`
     );
